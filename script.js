@@ -1327,7 +1327,7 @@ async function paintSequence() {
 }
 
 /* =========================
-   PICASSO
+   PICASSO (small cameo, bottom-right corner)
 ========================= */
 
 async function showPicasso() {
@@ -1452,9 +1452,16 @@ async function finalSetup() {
   `);
 }
 
-/* =========================
-   PICASSO REVEAL
-========================= */
+/* =====================================================
+   PICASSO REVEAL (the big birthday image)
+   FIX: uses its own .birthdayPicasso class so it's
+   centered on screen and z-indexed above the text,
+   instead of inheriting the small bottom-right-corner
+   .picasso position. Built via JS + appended to body,
+   same reliable pattern as showPicasso(), instead of
+   an inline <img> inside render() (which was getting
+   wiped out mid-animation by later render() calls).
+===================================================== */
 
 async function picassoReveal() {
 
@@ -1468,27 +1475,39 @@ async function picassoReveal() {
     <h1 class="finalTitle">
       PABLO PICASSO 🎨
     </h1>
-
-    <div class="picasso birthdayPicasso">
-      <div class="picassoArt">
-        <img
-          src="assets/pablo bond 1.jpeg"
-          alt="Pablo Picasso"
-        >
-      </div>
-    </div>
   `);
 
-  const birthdayPic =
-    document.querySelector(".birthdayPicasso");
+  const birthdayPic = document.createElement("div");
+
+  birthdayPic.className = "picasso birthdayPicasso";
+
+  birthdayPic.innerHTML = `
+    <div class="picassoArt">
+      <img
+        src="assets/pablo bond 1.jpeg"
+        alt="Pablo Picasso"
+        onerror="console.error('Image failed to load — check filename/case/path in assets folder')"
+      >
+    </div>
+  `;
+
+  document.body.appendChild(birthdayPic);
 
   await wait(500,id);
 
-  if (id !== sequenceId) return;
+  if (id !== sequenceId) {
+    birthdayPic.remove();
+    return;
+  }
 
   birthdayPic.classList.add("show");
 
-  if (!await wait(4200,id)) return;
+  if (!await wait(4200,id)) {
+    birthdayPic.remove();
+    return;
+  }
+
+  birthdayPic.remove();
 
   render(`
     <p class="line">

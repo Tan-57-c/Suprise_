@@ -1023,6 +1023,34 @@ body.shake #bubbles {
 }
 
 /* =========================
+   BIRTHDAY PICASSO (big centered reveal)
+   FIX: dedicated class so this instance
+   is centered + always on top, instead of
+   inheriting the small bottom-right corner
+   position/size from .picasso
+========================= */
+
+.birthdayPicasso {
+  position: fixed;
+  z-index: 999;
+
+  left: 50%;
+  top: 72%;
+  right: auto;
+  bottom: auto;
+
+  width: clamp(200px, 40vw, 300px);
+  height: clamp(200px, 40vw, 300px);
+
+  transform: translate(-50%, -50%) scale(.2) rotate(8deg);
+}
+
+.birthdayPicasso.show {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1) rotate(0);
+}
+
+/* =========================
    FINAL
 ========================= */
 
@@ -1175,10 +1203,12 @@ body.final {
 
   z-index: 500;
 
-  right: 18px;
-  top: 50%;
+  left: 50%;
+  bottom: max(24px, env(safe-area-inset-bottom));
+  top: auto;
+  right: auto;
 
-  transform: translateY(-50%);
+  transform: translateX(-50%);
 
   border: 1px solid rgba(255,255,255,.72);
   border-radius: 999px;
@@ -1213,13 +1243,13 @@ body.final {
 
 .postCredits:hover {
   transform:
-    translateY(-50%)
+    translateX(-50%)
     scale(1.04);
 }
 
 .postCredits:active {
   transform:
-    translateY(-50%)
+    translateX(-50%)
     scale(.92);
 }
 
@@ -1346,12 +1376,19 @@ body.postcredits {
     height: 105px;
   }
 
+  .birthdayPicasso {
+    top: 74%;
+    width: clamp(160px, 55vw, 240px);
+    height: clamp(160px, 55vw, 240px);
+  }
+
   .paint .brush {
     width: 130vw;
   }
 
   .postCredits {
-    right: 12px;
+    left: 50%;
+    right: auto;
   }
 }
 
