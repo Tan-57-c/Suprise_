@@ -1484,7 +1484,7 @@ async function picassoReveal() {
   birthdayPic.innerHTML = `
     <div class="picassoArt">
       <img
-        src="assets/pablo bond 1.jpeg"
+        src="assets/pablo%20bond%201.jpeg"
         alt="Pablo Picasso"
         onerror="console.error('Image failed to load — check filename/case/path in assets folder')"
       >
